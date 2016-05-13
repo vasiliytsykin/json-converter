@@ -17,9 +17,9 @@ namespace JsonConverter
         public void Setup()
         {
             oldVersion = JObject.Parse(File.ReadAllText(
-                @"c:\Users\VasyaSavincov\Documents\Visual Studio 2015\Projects\JsonConverter\JsonSamples1\1.v2.json"));
+                @"c:\Users\VasyaSavincov\Documents\Visual Studio 2015\Projects\json-converter\JsonSamples1\1.v2.json"));
             newVersion = JObject.Parse(File.ReadAllText(
-                @"c:\Users\VasyaSavincov\Documents\Visual Studio 2015\Projects\JsonConverter\JsonSamples1\1.v3.json"));
+                @"c:\Users\VasyaSavincov\Documents\Visual Studio 2015\Projects\json-converter\JsonSamples1\1.v3.json"));
             converter = new JsonVersionConverter();
         }
 
