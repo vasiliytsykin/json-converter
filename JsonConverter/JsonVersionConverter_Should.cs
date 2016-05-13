@@ -16,22 +16,36 @@ namespace JsonConverter
         [SetUp]
         public void Setup()
         {
-            oldVersion = JObject.Parse(File.ReadAllText(
-                @"c:\Users\VasyaSavincov\Documents\Visual Studio 2015\Projects\json-converter\JsonSamples1\1.v2.json"));
-            newVersion = JObject.Parse(File.ReadAllText(
-                @"c:\Users\VasyaSavincov\Documents\Visual Studio 2015\Projects\json-converter\JsonSamples1\1.v3.json"));
+            
             converter = new JsonVersionConverter();
         }
 
         [Test]
-        public void Do_ProperConversion()
+        public void Do_ProperConversion_OnEx1()
         {
-            var newSerialized = JsonConvert.SerializeObject(newVersion);
+
+            oldVersion = JObject.Parse(File.ReadAllText(
+                @"c:\Users\VasyaSavincov\Documents\Visual Studio 2015\Projects\json-converter\JsonSamples1\1.v2.json"));
+            newVersion = JObject.Parse(File.ReadAllText(
+                @"c:\Users\VasyaSavincov\Documents\Visual Studio 2015\Projects\json-converter\JsonSamples1\1.v3.json"));
 
             var oldConverted = converter.Convert(oldVersion);
-            var oldConvertedSerialized = JsonConvert.SerializeObject(oldConverted);
+          
+            JToken.DeepEquals(newVersion, oldConverted).Should().BeTrue();
+        }
 
-            oldConvertedSerialized.Should().Be(newSerialized);
+        [Test]
+        public void Do_ProperConversion_OnEx2()
+        {
+
+            oldVersion = JObject.Parse(File.ReadAllText(
+                @"c:\Users\VasyaSavincov\Documents\Visual Studio 2015\Projects\json-converter\JsonSamples2\2.v2.json"));
+            newVersion = JObject.Parse(File.ReadAllText(
+                @"c:\Users\VasyaSavincov\Documents\Visual Studio 2015\Projects\json-converter\JsonSamples2\2.v3.json"));          
+
+            var oldConverted = converter.Convert(oldVersion);           
+
+            JToken.DeepEquals(newVersion, oldConverted).Should().BeTrue();
         }
     }
 }

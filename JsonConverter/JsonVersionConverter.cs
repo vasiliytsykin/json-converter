@@ -18,12 +18,33 @@ namespace JsonConverter
             return new JObject(
                 new JProperty("version", "3"),
                 new JProperty("products", new JArray(products
-                .Select(p => new JObject(
-                    new JProperty("id", int.Parse(p.Name)),
-                    new JProperty("name", p.Value["name"]),
-                    new JProperty("price", p.Value["price"]),
-                    new JProperty("count", p.Value["count"])))))
+                .Select(JPropToJObj)))
                 );
+        }
+
+        private JObject JPropToJObj(JProperty jProperty)
+        {
+            var name = jProperty.Name;
+            JToken size;
+
+            JObject val = (JObject)jProperty.Value;
+            val.AddFirst(new JProperty("id", int.Parse(name)));
+
+            if (val.TryGetValue("size", out size))
+            {
+                val.Property("size").Remove();
+                val.Add(SizeToDimensions(size));           
+            }
+
+            return val;
+        }
+
+        private JProperty SizeToDimensions(JToken size)
+        {                    
+            return new JProperty("dimensions", 
+                new JObject(new JProperty("w", size[0]), 
+                new JProperty("h", size[1]), 
+                new JProperty("l", size[2])));
         }
     }
 }
